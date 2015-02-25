@@ -301,6 +301,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
             case KeyEvent.KEYCODE_ENTER:
             case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
             case KeyEvent.KEYCODE_DPAD_CENTER:
+            case KeyEvent.KEYCODE_VOLUME_UP:
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
                 this.queueEvent(new Runnable() {
                     @Override
                     public void run() {

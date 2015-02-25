@@ -79,4 +79,6 @@ namespace CocosDenshion {
     void SimpleAudioEngine::stopAllEffects() { }
     void SimpleAudioEngine::preloadEffect(const char* pszFilePath) { }
     void SimpleAudioEngine::unloadEffect(const char* pszFilePath) { }
+    void SimpleAudioEngine::decreaseVolume() { }
+    void SimpleAudioEngine::increaseVolume() { }
 }

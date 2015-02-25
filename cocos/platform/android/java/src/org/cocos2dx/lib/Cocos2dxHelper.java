@@ -38,6 +38,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager.OnActivityResultListener;
@@ -160,6 +161,22 @@ public class Cocos2dxHelper {
 
     public static AssetManager getAssetManager() {
         return Cocos2dxHelper.sAssetManager;
+    }
+
+    public static void decreaseVolume() {
+        try {
+            AudioManager audioManager = (AudioManager) sActivity.getSystemService(Context.AUDIO_SERVICE);
+            if (audioManager != null)
+                audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
+        } catch (Exception e) { }
+    }
+
+    public static void increaseVolume() {
+        try {
+            AudioManager audioManager = (AudioManager) sActivity.getSystemService(Context.AUDIO_SERVICE);
+            if (audioManager != null)
+                audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
+        } catch (Exception e) { }
     }
 
     public static void enableAccelerometer() {

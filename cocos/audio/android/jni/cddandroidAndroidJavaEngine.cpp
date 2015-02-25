@@ -318,5 +318,27 @@ namespace CocosDenshion {
             methodInfo.env->DeleteLocalRef(stringArg);
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         }
+
+        void AndroidJavaEngine::decreaseVolume() {
+            cocos2d::JniMethodInfo methodInfo;
+        
+            if (! getJNIStaticMethodInfo(methodInfo, "decreaseVolume", "()V")) {
+                return ;
+            }
+        
+            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+            methodInfo.env->DeleteLocalRef(methodInfo.classID);
+        }
+
+        void AndroidJavaEngine::increaseVolume() {
+            cocos2d::JniMethodInfo methodInfo;
+        
+            if (! getJNIStaticMethodInfo(methodInfo, "increaseVolume", "()V")) {
+                return ;
+            }
+        
+            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID);
+            methodInfo.env->DeleteLocalRef(methodInfo.classID);
+        }
     }
 }

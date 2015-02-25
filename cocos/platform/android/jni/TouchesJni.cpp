@@ -85,6 +85,8 @@ extern "C" {
 #define KEYCODE_ENTER 0x42
 #define KEYCODE_PLAY  0x7e
 #define KEYCODE_DPAD_CENTER  0x17
+#define KEYCODE_VOLUME_UP  0x18
+#define KEYCODE_VOLUME_DOWN  0x19
     
     
     static std::unordered_map<int, cocos2d::EventKeyboard::KeyCode> g_keyCodeMap = {
@@ -97,6 +99,8 @@ extern "C" {
         { KEYCODE_ENTER  , cocos2d::EventKeyboard::KeyCode::KEY_ENTER},
         { KEYCODE_PLAY  , cocos2d::EventKeyboard::KeyCode::KEY_PLAY},
         { KEYCODE_DPAD_CENTER  , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_CENTER},
+        { KEYCODE_VOLUME_UP  , cocos2d::EventKeyboard::KeyCode::KEY_VOLUME_UP},
+        { KEYCODE_VOLUME_DOWN  , cocos2d::EventKeyboard::KeyCode::KEY_VOLUME_DOWN},
         
     };
     

@@ -55,6 +55,8 @@ namespace CocosDenshion {
             void stopAllEffects();
             void preloadEffect(const char* pszFilePath);
             void unloadEffect(const char* pszFilePath);
+            void decreaseVolume();
+            void increaseVolume();
 
         private :
             static bool getJNIStaticMethodInfo(cocos2d::JniMethodInfo &methodinfo,

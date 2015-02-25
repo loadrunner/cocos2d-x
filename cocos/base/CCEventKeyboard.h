@@ -207,7 +207,9 @@ public:
         KEY_DPAD_DOWN,
         KEY_DPAD_CENTER,
         KEY_ENTER,
-        KEY_PLAY
+        KEY_PLAY,
+        KEY_VOLUME_UP,
+        KEY_VOLUME_DOWN
     };
     
     EventKeyboard(KeyCode keyCode, bool isPressed);
