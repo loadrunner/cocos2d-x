@@ -39,7 +39,7 @@ Generated Files
 AppPackages
 
 # Ignore files build by ndk and eclipse
-libs/
+libs/armeabi
 bin/
 obj/
 gen/
@@ -113,9 +113,6 @@ build/build/
 cocos/scripting/lua-bindings/proj.ios_mac/build/
 tests/*/runtime/
 tests/*/publish/
-
-# Android
-project.properties
 
 # Ignore prebuilt libraries folder
 /external/xxhash/
