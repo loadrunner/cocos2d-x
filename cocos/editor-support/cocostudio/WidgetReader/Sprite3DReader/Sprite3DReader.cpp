@@ -26,6 +26,7 @@
 
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/CSParse3DBinary_generated.h"
+
 #include "cocostudio/FlatBuffersSerialize.h"
 #include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
 
