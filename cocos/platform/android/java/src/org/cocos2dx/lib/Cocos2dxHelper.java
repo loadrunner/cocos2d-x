@@ -42,6 +42,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager.OnActivityResultListener;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -208,6 +209,21 @@ public class Cocos2dxHelper {
         } catch (Exception e) {
         }
         return ret;
+    }
+
+    public static String getCurrentCountry() {
+        Locale locale = null;
+        
+        try {
+            TelephonyManager tm = (TelephonyManager) sActivity.getSystemService(Context.TELEPHONY_SERVICE);
+            if (tm != null && tm.getSimCountryIso() != null && !tm.getSimCountryIso().isEmpty())
+                locale = new Locale("", tm.getSimCountryIso());
+        } catch (Exception e) { }
+        
+        if (locale == null)
+            locale = Locale.getDefault();
+        
+        return locale.getISO3Country();
     }
 
     public static void preloadBackgroundMusic(final String pPath) {
