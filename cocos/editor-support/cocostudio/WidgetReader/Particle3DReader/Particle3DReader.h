@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
  
@@ -21,41 +21,33 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __HTTPASYNCONNECTION_H__
-#define __HTTPASYNCONNECTION_H__
 
-#import <Foundation/Foundation.h>
-#import <Security/Security.h>
+#ifndef __cocos2d_libs__Particle3DReader__
+#define __cocos2d_libs__Particle3DReader__
 
-@interface HttpAsynConnection : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+#include "cocos2d.h"
+#include "cocostudio/CocosStudioExport.h"
+#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
+#include "cocostudio/WidgetReader/NodeReaderDefine.h"
+
+namespace cocostudio
 {
+    class CC_STUDIO_DLL Particle3DReader : public cocos2d::Ref, public NodeReaderProtocol
+    {
+        DECLARE_CLASS_NODE_READER_INFO
+        
+    public:
+        Particle3DReader();
+        ~Particle3DReader();
+        
+        static Particle3DReader* getInstance();
+        static void purge();
+        
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
+                                                                             flatbuffers::FlatBufferBuilder* builder);
+        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* particle3DOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* particle3DOptions);
+    };
 }
 
-// The original URL to download.  Due to redirects the actual content may come from another URL
-@property (strong) NSString *srcURL;
-
-@property (strong) NSString *sslFile;
-
-@property (copy) NSDictionary *responseHeader;
-
-@property (strong) NSMutableData *responseData;
-
-@property (readonly) NSInteger getDataTime;
-
-@property (readonly) NSInteger responseCode;
-@property (readonly) NSString *statusString;
-
-@property (strong) NSError *responseError;
-
-@property (strong) NSURLConnection *conn;
-
-@property bool finish;
-
-@property (strong) NSRunLoop *runLoop;
-
-// instructs the class to start the request.
--(void) startRequest:(NSURLRequest*)request;
-
-@end
-
-#endif //__HTTPASYNCONNECTION_H__
+#endif /* defined(__cocos2d_libs__Particle3DReader__) */
