@@ -290,6 +290,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
     @Override
     public boolean onKeyDown(final int pKeyCode, final KeyEvent pKeyEvent) {
+        if (pKeyEvent.getRepeatCount() > 0)
+            return true;
+        
         boolean result = false;
         
         switch (pKeyCode) {
