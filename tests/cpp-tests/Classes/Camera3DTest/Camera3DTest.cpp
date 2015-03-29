@@ -239,8 +239,8 @@ void CameraRotationTest::update(float dt)
 //------------------------------------------------------------------
 Camera3DTestDemo::Camera3DTestDemo(void)
 : _incRot(nullptr)
-, _camera(nullptr)
 , _decRot(nullptr)
+, _camera(nullptr)
 , _bZoomOut(false)
 , _bZoomIn(false)
 , _bRotateLeft(false)
@@ -882,8 +882,9 @@ void CameraCullingDemo::update(float dt)
 void CameraCullingDemo::reachEndCallBack()
 {
     _cameraFirst->stopActionByTag(100);
-    auto inverse = (MoveTo*)_moveAction->reverse();
+    auto inverse = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0));
     inverse->retain();
+    
     _moveAction->release();
     _moveAction = inverse;
     auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
@@ -902,7 +903,7 @@ void CameraCullingDemo::switchViewCallback(Ref* sender)
         _cameraFirst->setCameraFlag(CameraFlag::USER8);
         _cameraFirst->setPosition3D(Vec3(-100,0,0));
         _cameraFirst->lookAt(Vec3(1000,0,0));
-        _moveAction = MoveTo::create(4.f, Vec2(100, 0));
+        _moveAction = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0));
         _moveAction->retain();
         auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(CameraCullingDemo::reachEndCallBack, this)), nullptr);
         seq->setTag(100);
@@ -1048,14 +1049,14 @@ CameraArcBallDemo::CameraArcBallDemo(void)
 , _layer3D(nullptr)
 , _cameraType(CameraType::Free)
 , _camera(nullptr)
-,_drawGrid(nullptr)
-,_sprite3D1(nullptr)
-,_sprite3D2(nullptr)
-,_radius(1.0f)
-,_distanceZ(50.0f)
-,_operate(OperateCamType::RotateCamera)
-,_center(Vec3(0,0,0))
-,_target(0)
+, _drawGrid(nullptr)
+, _radius(1.0f)
+, _distanceZ(50.0f)
+, _operate(OperateCamType::RotateCamera)
+, _center(Vec3(0,0,0))
+, _target(0)
+, _sprite3D1(nullptr)
+, _sprite3D2(nullptr)
 {
 }
 CameraArcBallDemo::~CameraArcBallDemo(void)

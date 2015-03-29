@@ -42,6 +42,8 @@ Use any of these editors to generate BMFonts:
 
 NS_CC_BEGIN
 
+/// @cond
+
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #elif _MSC_VER >= 1400 //vs 2005 or higher
@@ -111,8 +113,8 @@ public:
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     
     // RGBAProtocol 
-    virtual bool isOpacityModifyRGB() const;
-    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
+    virtual bool isOpacityModifyRGB() const override;
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
 
     void setFntFile(const std::string& fntFile, const Vec2& imageOffset = Vec2::ZERO);
     const std::string& getFntFile() const;
@@ -154,6 +156,9 @@ private:
 #elif _MSC_VER >= 1400 //vs 2005 or higher
 #pragma warning (pop)
 #endif
+
+/// @endcond
+
 NS_CC_END
 
 #endif //__CCBITMAP_FONT_ATLAS_H__
