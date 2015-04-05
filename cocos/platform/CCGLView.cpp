@@ -150,8 +150,23 @@ void GLView::updateDesignResolutionSize()
         // calculate the rect of viewport
         float viewPortW = _designResolutionSize.width * _scaleX;
         float viewPortH = _designResolutionSize.height * _scaleY;
+        float offsetX, offsetY;
+        switch (_resolutionGravity)
+        {
+            case ResolutionGravity::START:
+                offsetX = offsetY = 0;
+                break;
+            case ResolutionGravity::END:
+                offsetX = _screenSize.width - viewPortW;
+                offsetY = _screenSize.height - viewPortH;
+                break;
+            case ResolutionGravity::CENTER:
+            default:
+                offsetX = (_screenSize.width - viewPortW) / 2;
+                offsetY = (_screenSize.height - viewPortH) / 2;
+        }
         
-        _viewPortRect.setRect((_screenSize.width - viewPortW) / 2, (_screenSize.height - viewPortH) / 2, viewPortW, viewPortH);
+        _viewPortRect.setRect(offsetX, offsetY, viewPortW, viewPortH);
         
         // reset director's member variables to fit visible rect
         auto director = Director::getInstance();
@@ -161,7 +176,7 @@ void GLView::updateDesignResolutionSize()
     }
 }
 
-void GLView::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
+void GLView::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy, ResolutionGravity resolutionGravity)
 {
     CCASSERT(resolutionPolicy != ResolutionPolicy::UNKNOWN, "should set resolutionPolicy");
     
@@ -172,6 +187,7 @@ void GLView::setDesignResolutionSize(float width, float height, ResolutionPolicy
 
     _designResolutionSize.setSize(width, height);
     _resolutionPolicy = resolutionPolicy;
+    _resolutionGravity = resolutionGravity;
     
     updateDesignResolutionSize();
  }
@@ -295,7 +311,7 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
 
             Touch* touch = g_touches[unusedIndex] = new (std::nothrow) Touch();
 			touch->setTouchInfo(unusedIndex, (x - _viewPortRect.origin.x) / _scaleX,
-                                     (y - _viewPortRect.origin.y) / _scaleY);
+                                     (y - (_screenSize.height - _viewPortRect.size.height - _viewPortRect.origin.y)) / _scaleY);
             
             CCLOGINFO("x = %f y = %f", touch->getLocationInView().x, touch->getLocationInView().y);
             
@@ -340,7 +356,7 @@ void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
         if (touch)
         {
 			touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
-								(y - _viewPortRect.origin.y) / _scaleY);
+								(y - (_screenSize.height - _viewPortRect.size.height - _viewPortRect.origin.y)) / _scaleY);
             
             touchEvent._touches.push_back(touch);
         }
@@ -389,7 +405,7 @@ void GLView::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num
         {
             CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
 			touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
-								(y - _viewPortRect.origin.y) / _scaleY);
+								(y - (_screenSize.height - _viewPortRect.size.height - _viewPortRect.origin.y)) / _scaleY);
 
             touchEvent._touches.push_back(touch);
             

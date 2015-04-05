@@ -64,6 +64,13 @@ enum class ResolutionPolicy
     UNKNOWN,
 };
 
+enum class ResolutionGravity
+{
+    CENTER,
+    START,
+    END
+};
+
 struct GLContextAttrs
 {
     int redBits;
@@ -188,7 +195,7 @@ public:
      *                         [2] NO_BORDER Full screen without black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two areas of your game view will be cut.
      *                         [3] SHOW_ALL  Full screen with black border: if the design resolution ratio of width to height is different from the screen resolution ratio, two black borders will be shown.
      */
-    virtual void setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy);
+    virtual void setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy, ResolutionGravity resolutionGravity = ResolutionGravity::CENTER);
 
     /** Get design resolution size.
      *  Default resolution size is the same as 'getFrameSize'.
@@ -272,6 +279,7 @@ protected:
     float _scaleX;
     float _scaleY;
     ResolutionPolicy _resolutionPolicy;
+    ResolutionGravity _resolutionGravity;
 };
 
 // end of platform group
