@@ -31,8 +31,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.Semaphore;
 
-import com.chukong.cocosplay.client.CocosPlayClient;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -114,10 +112,6 @@ public class Cocos2dxSound {
     // ===========================================================
 
     public int preloadEffect(final String path) {
-        if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
-            CocosPlayClient.updateAssets(path);
-        }
-        CocosPlayClient.notifyFileLoaded(path);
         Integer soundID = this.mPathSoundIDMap.get(path);
 
         if (soundID == null) {
