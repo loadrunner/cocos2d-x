@@ -374,6 +374,11 @@ public class Cocos2dxHelper {
         return -1;
     }
     
+    public static boolean hasTouchscreen()
+    {
+        return getActivity().getPackageManager().hasSystemFeature("android.hardware.touchscreen");
+    }
+    
     // ===========================================================
     // Functions for CCUserDefault
     // ===========================================================

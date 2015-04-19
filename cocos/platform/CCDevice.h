@@ -55,6 +55,8 @@ public:
      */
     static int getDPI();
     
+    static bool hasTouchscreen();
+    
     /**
      * To enable or disable accelerometer.
      */

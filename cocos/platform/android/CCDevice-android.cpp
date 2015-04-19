@@ -48,6 +48,19 @@ int Device::getDPI()
     return dpi;
 }
 
+bool Device::hasTouchscreen()
+{
+    JniMethodInfo t;
+    
+    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxHelper", "hasTouchscreen", "()Z")) {
+        jboolean ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+        return ret;
+    }
+    
+    return false;
+}
+
 void Device::setAccelerometerEnabled(bool isEnabled)
 {
     if (isEnabled)

@@ -102,6 +102,11 @@ int Device::getDPI()
     return dpi;
 }
 
+bool Device::hasTouchscreen()
+{
+    return false;
+}
+
 void Device::setAccelerometerEnabled(bool isEnabled)
 {
 
