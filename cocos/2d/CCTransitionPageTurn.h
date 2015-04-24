@@ -35,7 +35,7 @@ NS_CC_BEGIN
 class NodeGrid;
 
 /**
- * @addtogroup transition
+ * @addtogroup _2d
  * @{
  */
 
@@ -67,6 +67,7 @@ public:
     
     //
     // Overrides
+    // @js NA
     //
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
@@ -115,7 +116,7 @@ protected:
     bool    _back;
 };
 
-// end of transition group
+// end of _2d group
 /// @}
 
 NS_CC_END

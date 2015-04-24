@@ -28,13 +28,22 @@
 
 #include "base/CCEvent.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
+/** @class EventKeyboard
+ * @brief Keyboard event.
+ */
 class CC_DLL EventKeyboard : public Event
 {
 public:
     /**
-     * The key (code).
+     * KeyCode The key (code).
+     * @js NA
      */
     enum class KeyCode
     {
@@ -212,6 +221,12 @@ public:
         KEY_VOLUME_DOWN
     };
     
+    /** Constructor.
+     *
+     * @param keyCode A given keycode.
+     * @param isPressed True if the key is pressed.
+     * @js ctor
+     */
     EventKeyboard(KeyCode keyCode, bool isPressed);
     
 private:
@@ -222,5 +237,8 @@ private:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCKeyboardEvent__) */

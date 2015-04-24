@@ -34,7 +34,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup particle_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -140,6 +140,7 @@ class CC_DLL ParticleSystem : public Node, public TextureProtocol
 {
 public:
     /** Mode
+     * @js cc.ParticleSystem.MODE_GRAVITY;
      */
     enum class Mode
     {
@@ -149,6 +150,7 @@ public:
     
     /** PositionType
      Possible types of particle positions.
+     * @js cc.ParticleSystem.TYPE_FREE
      */
     enum class PositionType
     {
@@ -187,12 +189,14 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleSystemQuad object.
+     * @js NA
      */
     static ParticleSystem* createWithTotalParticles(int numberOfParticles);
 
     /** Add a particle to the emitter.
      *
      * @return True if add success.
+     * @js ctor
      */
     bool addParticle();
     /** Initializes a particle.
@@ -908,7 +912,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystem);
 };
 
-// end of particle_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

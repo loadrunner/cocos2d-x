@@ -37,7 +37,7 @@ class SpriteFrame;
 class EventCustom;
 
 /**
- * @addtogroup particle_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -53,6 +53,7 @@ Special features and Limitations:
 - It supports subrects.
 - It supports batched rendering since 1.1.
 @since v0.8
+@js NA
 */
 class CC_DLL ParticleSystemQuad : public ParticleSystem
 {
@@ -186,7 +187,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystemQuad);
 };
 
-// end of particle_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

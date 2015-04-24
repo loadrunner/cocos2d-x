@@ -36,12 +36,13 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup global
+ * @addtogroup base
  * @{
  */
 /** @class Configuration
  * @brief Configuration contains some openGL variables
  * @since v0.99.0
+ * @js NA
  */
 class CC_DLL Configuration : public Ref
 {
@@ -233,7 +234,7 @@ protected:
 	ValueMap        _valueDict;
 };
 
-// end of global group
+// end of base group
 /// @}
 
 NS_CC_END

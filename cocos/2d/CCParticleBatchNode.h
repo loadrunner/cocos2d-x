@@ -41,7 +41,7 @@ class TextureAtlas;
 class ParticleSystem;
 
 /**
- * @addtogroup particle_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -75,6 +75,7 @@ public:
      * @param tex A given texture.
      * @param capacity A capacity of particles.
      * @return An autoreleased ParticleBatchNode object.
+     * @js NA
      */
     static ParticleBatchNode* createWithTexture(Texture2D *tex, int capacity = kParticleDefaultCapacity);
 
@@ -178,7 +179,7 @@ private:
     BatchCommand _batchCommand;
 };
 
-// end of particle_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END
