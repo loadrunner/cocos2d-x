@@ -3355,6 +3355,46 @@ int tolua_cocos2dx_DrawNode_drawPoints(lua_State* tolua_S)
             return 0;
         }
     }
+    else if (argc == 4)
+    {
+        unsigned int size;
+        luaval_to_uint32(tolua_S, 3, &size, "cc.DrawNode:drawPoints");
+        if ( size > 0 )
+        {
+            cocos2d::Vec2* points = new cocos2d::Vec2[size];
+            if (nullptr == points)
+                return 0;
+            
+            for (int i = 0; i < size; i++)
+            {
+                lua_pushnumber(tolua_S,i + 1);
+                lua_gettable(tolua_S,2);
+                if (!tolua_istable(tolua_S,-1, 0, &tolua_err))
+                {
+                    CC_SAFE_DELETE_ARRAY(points);
+#if COCOS2D_DEBUG >= 1
+                    goto tolua_lerror;
+#endif
+                }
+                
+                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i], "cc.DrawNode:drawPoints"))
+                {
+                    lua_pop(tolua_S, 1);
+                    CC_SAFE_DELETE_ARRAY(points);
+                    return 0;
+                }
+                lua_pop(tolua_S, 1);
+            }
+            
+            float pointSize = (float)tolua_tonumber(tolua_S, 4, 0);
+            cocos2d::Color4F color;
+            ok &=luaval_to_color4f(tolua_S, 5, &color, "cc.DrawNode:drawPoints");
+            if(!ok)
+                return 0;
+            self->drawPoints(points, size, pointSize, color);
+            return 0;
+        }
+    }
     
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.DrawNode:drawPoints",argc, 3);
     return 0;
@@ -7088,6 +7128,56 @@ tolua_lerror:
     return 0;
 }
 
+int lua_cocos2dx_Application_is64BitIOSDevice(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Application* cobj = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Application",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::Application*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_is64BitIOSDevice'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        bool is64BitIOSDevice = false;
+        Application::Platform platform = cocos2d::Application::getInstance()->getTargetPlatform();
+        if (Application::Platform::OS_IPHONE == platform || Application::Platform::OS_IPAD == platform)
+        {
+#if defined(__arm64__)
+            is64BitIOSDevice = true;
+#endif
+        }
+        
+        tolua_pushboolean(tolua_S, is64BitIOSDevice);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Application:is64BitIOSDevice",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Application_is64BitIOSDevice'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
 static void extendApplication(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "cc.Application");
@@ -7095,6 +7185,7 @@ static void extendApplication(lua_State* tolua_S)
     if (lua_istable(tolua_S,-1))
     {
         tolua_function(tolua_S, "isIOS64bit", lua_cocos2dx_Application_isIOS64bit);
+        tolua_function(tolua_S, "is64BitIOSDevice", lua_cocos2dx_Application_is64BitIOSDevice);
     }
     lua_pop(tolua_S, 1);
 }

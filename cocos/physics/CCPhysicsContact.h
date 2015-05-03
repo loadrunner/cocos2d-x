@@ -89,7 +89,10 @@ public:
     /** Get previous contact data */
     inline const PhysicsContactData* getPreContactData() const { return _preContactData; }
     
-    /** Get data. */
+    /** 
+     * Get data. 
+     * @lua NA
+     */
     inline void* getData() const { return _data; }
     
     /**

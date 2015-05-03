@@ -77,7 +77,10 @@ enum class ResolutionGravity
     END
 };
 
-/** @struct GLContextAttrs Have six opengl Context Attrs. */
+/** @struct GLContextAttrs 
+ *
+ * There are six opengl Context Attrs. 
+ */
 struct GLContextAttrs
 {
     int redBits;
@@ -91,7 +94,7 @@ struct GLContextAttrs
 NS_CC_BEGIN
 
 /**
- * @addtogroup platform
+ * @addtogroup core
  * @{
  */
 /**

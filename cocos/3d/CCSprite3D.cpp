@@ -244,6 +244,7 @@ Sprite3D::Sprite3D()
 , _aabbDirty(true)
 , _lightMask(-1)
 , _shaderUsingLight(false)
+, _forceDepthWrite(false)
 {
 }
 
@@ -478,6 +479,8 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         {
             if(it->bones.size() > 0 || singleSprite)
             {
+                if(singleSprite)
+                    root->setName(nodedata->id);
                 auto mesh = Mesh::create(nodedata->id, getMeshIndexData(it->subMeshId));
                 if(mesh)
                 {
@@ -518,6 +521,17 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                             }
                         }
                     }
+                    
+                    Vec3 pos;
+                    Quaternion qua;
+                    Vec3 scale;
+                    nodedata->transform.decompose(&scale, &qua, &pos);
+                    setPosition3D(pos);
+                    setRotationQuat(qua);
+                    setScaleX(scale.x);
+                    setScaleY(scale.y);
+                    setScaleZ(scale.z);
+                    
                 }
             }
             else
@@ -560,7 +574,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
     }
     for(const auto& it : nodedata->children)
     {
-        createNode(it,node, matrialdatas, singleSprite);
+        createNode(it,node, matrialdatas, nodedata->children.size() == 1);
     }
 }
 
@@ -631,14 +645,18 @@ void Sprite3D::removeAllAttachNode()
     }
     _attachments.clear();
 }
-#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER) 
+
 //Generate a dummy texture when the texture file is missing
 static Texture2D * getDummyTexture()
 {
     auto texture = Director::getInstance()->getTextureCache()->getTextureForKey("/dummyTexture");
     if(!texture)
     {
-        unsigned char data[] ={255,0,0,255};//1*1 pure red picture
+#ifdef NDEBUG
+        unsigned char data[] ={0,0,0,0};//1*1 transparent picture
+#else
+        unsigned char data[] ={255,0,0,255};//1*1 red picture
+#endif
         Image * image =new (std::nothrow) Image();
         image->initWithRawData(data,sizeof(data),1,1,sizeof(unsigned char));
         texture=Director::getInstance()->getTextureCache()->addImage(image,"/dummyTexture");
@@ -646,7 +664,6 @@ static Texture2D * getDummyTexture()
     }
     return texture;
 }
-#endif
 
 void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTransform, uint32_t parentFlags)
 {
@@ -735,7 +752,6 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         auto programstate = mesh->getGLProgramState();
         auto& meshCommand = mesh->getMeshCommand();
 
-#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER) 
         GLuint textureID = 0;
         if(mesh->getTexture())
         {
@@ -746,10 +762,6 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             mesh->setTexture(texture);
             textureID = texture->getName();
         }
-
-#else
-        GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
-#endif
 
         bool isTransparent = (mesh->_isTransparent || color.a < 1.f);
         float globalZ = isTransparent ? 0 : _globalZOrder;
@@ -807,6 +819,22 @@ const BlendFunc& Sprite3D::getBlendFunc() const
     return _blend;
 }
 
+AABB Sprite3D::getAABBRecursively()
+{
+    AABB aabb;
+    const Vector<Node*>& children = getChildren();
+    for (const auto& iter : children)
+    {
+        Sprite3D* child = dynamic_cast<Sprite3D*>(iter);
+        if(child)
+        {
+            aabb.merge(child->getAABBRecursively());
+        }
+    }
+    aabb.merge(getAABB());
+    return aabb;
+}
+
 const AABB& Sprite3D::getAABB() const
 {
     Mat4 nodeToWorldTransform(getNodeToWorldTransform());
@@ -819,14 +847,18 @@ const AABB& Sprite3D::getAABB() const
     else
     {
         _aabb.reset();
-        Mat4 transform(nodeToWorldTransform);
-        for (const auto& it : _meshes) {
-            if (it->isVisible())
-                _aabb.merge(it->getAABB());
+        if (_meshes.size())
+        {
+            Mat4 transform(nodeToWorldTransform);
+            for (const auto& it : _meshes) {
+                if (it->isVisible())
+                    _aabb.merge(it->getAABB());
+            }
+            
+            _aabb.transform(transform);
+            _nodeToWorldTransform = nodeToWorldTransform;
+            _aabbDirty = false;
         }
-        
-        _aabb.transform(transform);
-        _nodeToWorldTransform = nodeToWorldTransform;
     }
     
     return _aabb;

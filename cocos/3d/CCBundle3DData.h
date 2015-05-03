@@ -35,7 +35,10 @@
  
 NS_CC_BEGIN
 
-/**mesh vertex attribute*/
+/**mesh vertex attribute
+* @js NA
+* @lua NA
+*/
 struct MeshVertexAttrib
 {
     //attribute size
@@ -49,7 +52,10 @@ struct MeshVertexAttrib
 };
 
 
-/** model node data, since 3.3 */
+/** model node data, since 3.3
+* @js NA
+* @lua NA
+*/
 struct ModelData
 {
     std::string subMeshId;
@@ -68,7 +74,10 @@ struct ModelData
     }
 };
 
-/** Node data, since 3.3 */
+/** Node data, since 3.3 
+* @js NA
+* @lua NA
+*/
 struct NodeData
 {
     std::string id;
@@ -99,11 +108,19 @@ struct NodeData
 
 };
 
-/** node datas, since 3.3 */
+/** node datas, since 3.3 
+* @js NA
+* @lua NA
+*/
 struct NodeDatas
 {
     std::vector<NodeData*> skeleton; //skeleton
     std::vector<NodeData*> nodes; // nodes, CCNode, Sprite3D or part of Sprite3D
+    
+    virtual ~NodeDatas()
+    {
+        resetData();
+    }
     
     void resetData()
     {
@@ -120,7 +137,10 @@ struct NodeDatas
     }
 };
 
-/**mesh data*/
+/**mesh data
+* @js NA
+* @lua NA
+*/
 struct MeshData
 {
     typedef std::vector<unsigned short> IndexArray;
@@ -173,7 +193,10 @@ public:
     }
 };
 
-/** mesh datas */
+/** mesh datas 
+* @js NA
+* @lua NA
+*/
 struct MeshDatas
 {
     std::vector<MeshData*> meshDatas;
@@ -192,7 +215,10 @@ struct MeshDatas
     }
 };
 
-/**skin data*/
+/**skin data
+* @js NA
+* @lua NA
+*/
 struct SkinData
 {
     std::vector<std::string> skinBoneNames; //skin bones affect skin
@@ -261,7 +287,10 @@ struct SkinData
 
 };
 
-/**material data, */
+/**material data, 
+* @js NA
+* @lua NA
+*/
 struct MaterialData
 {
     std::map<int, std::string> texturePaths; //submesh id, texture path
@@ -272,7 +301,10 @@ struct MaterialData
 };
 
 
-/**new material, since 3.3 */
+/**new material, since 3.3 
+* @js NA
+* @lua NA
+*/
 struct NTextureData
 {
     enum class Usage {
@@ -308,7 +340,10 @@ struct NMaterialData
         return nullptr;
     }
 };
-/** material datas, since 3.3 */
+/** material datas, since 3.3 
+* @js NA
+* @lua NA
+*/
 struct MaterialDatas
 {
     std::vector<NMaterialData> materials;
@@ -326,7 +361,10 @@ struct MaterialDatas
         return nullptr;
     }
 };
-/**animation data*/
+/**animation data
+* @js NA
+* @lua NA
+*/
 struct Animation3DData
 {
 public:
@@ -334,7 +372,6 @@ public:
     {
         Vec3Key()
         : _time(0)
-        , _key(Vec3::ZERO)
         {
         }
         
@@ -396,7 +433,10 @@ public:
     }
 };
 
-/**reference data*/
+/**reference data
+* @js NA
+* @lua NA
+*/
 struct Reference
 {
 public:

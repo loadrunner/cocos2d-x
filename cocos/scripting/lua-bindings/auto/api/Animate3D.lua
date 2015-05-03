@@ -11,6 +11,13 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- set animate quality
+-- @function [parent=#Animate3D] setQuality 
+-- @param self
+-- @param #int quality
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
 -- 
 -- @function [parent=#Animate3D] setWeight 
 -- @param self
@@ -42,6 +49,12 @@
 -- @function [parent=#Animate3D] getWeight 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- get animate quality
+-- @function [parent=#Animate3D] getQuality 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @overload self, cc.Animation3D, float, float         

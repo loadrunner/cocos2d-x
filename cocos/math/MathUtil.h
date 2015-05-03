@@ -28,6 +28,11 @@
 
 #include "CCMathBase.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_MATH_BEGIN
 
 /**
@@ -70,6 +75,18 @@ public:
      * @param fallTime response time for falling slope (in the same units as elapsedTime).
      */
     static void smooth(float* x, float target, float elapsedTime, float riseTime, float fallTime);
+    
+    /**
+     * Linearly interpolates between from value to to value by alpha which is in
+     * the range [0,1]
+     *
+     * @param from the from value.
+     * @param to the to value.
+     * @param alpha the alpha value between [0,1]
+     *
+     * @return interpolated float value
+     */
+    static float lerp(float from, float to, float alpha);
 private:
     //Indicates that if neon is enabled
     static bool isNeon32Enabled();
@@ -115,7 +132,10 @@ private:
 };
 
 NS_CC_MATH_END
-
+/**
+ end of base group
+ @}
+ */
 #define MATRIX_SIZE ( sizeof(float) * 16)
 
 #endif
