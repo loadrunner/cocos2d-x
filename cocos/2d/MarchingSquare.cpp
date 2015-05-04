@@ -61,7 +61,8 @@ unsigned int MarchingSquare::findFirstNoneTransparentPixel()
             return i;
         }
     }
-    throw "image is all transparent!";
+    //throw "image is all transparent!";
+    return 0;
 }
 
 unsigned char MarchingSquare::getAlphaAt(const unsigned int i)
@@ -235,10 +236,12 @@ void MarchingSquare::marchSquare(int startx, int starty)
                 break;
             case 0:
                 CCLOG("case 0 at x:%d, y:%d, coming from %d, %d", curx, cury, prevx, prevy);
-                throw "this shoudln't happen";
+                //throw "this shoudln't happen";
+                return;
             case 15:
                 CCLOG("case 15 at x:%d, y:%d, coming from %d, %d", curx, cury, prevx, prevy);
-                throw "this shoudln't happen";
+                //throw "this shoudln't happen";
+                return;
         }
         //little optimization
         // if previous direction is same as current direction,
@@ -267,7 +270,8 @@ void MarchingSquare::marchSquare(int startx, int starty)
         prevy = stepy;
         problem = false;
         if(count > totalPixel)
-            throw "oh no, marching square cannot find starting position";
+            //throw "oh no, marching square cannot find starting position";
+            return;
     } while(curx != startx || cury != starty);
 }
 
