@@ -84,12 +84,12 @@ bool EventListenerKeyboard::init()
         if (keyboardEvent->_isPressed)
         {
             if (onKeyPressed != nullptr)
-                onKeyPressed(keyboardEvent->_keyCode, event);
+                onKeyPressed(keyboardEvent->_keyCode, keyboardEvent);
         }
         else
         {
             if (onKeyReleased != nullptr)
-                onKeyReleased(keyboardEvent->_keyCode, event);
+                onKeyReleased(keyboardEvent->_keyCode, keyboardEvent);
         }
     };
     

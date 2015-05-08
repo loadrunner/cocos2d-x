@@ -57,8 +57,8 @@ public:
     virtual EventListenerKeyboard* clone() override;
     virtual bool checkAvailable() override;
     
-    std::function<void(EventKeyboard::KeyCode, Event*)> onKeyPressed;
-    std::function<void(EventKeyboard::KeyCode, Event*)> onKeyReleased;
+    std::function<void(EventKeyboard::KeyCode, EventKeyboard*)> onKeyPressed;
+    std::function<void(EventKeyboard::KeyCode, EventKeyboard*)> onKeyReleased;
 CC_CONSTRUCTOR_ACCESS:
     EventListenerKeyboard();
     bool init();

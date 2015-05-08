@@ -27,10 +27,11 @@
 
 NS_CC_BEGIN
 
-EventKeyboard::EventKeyboard(KeyCode keyCode, bool isPressed)
+EventKeyboard::EventKeyboard(KeyCode keyCode, bool isPressed, int deviceId/* = 0 */)
 : Event(Type::KEYBOARD)
 , _keyCode(keyCode)
 , _isPressed(isPressed)
+, _deviceId(deviceId)
 {}
 
 NS_CC_END

@@ -23,12 +23,17 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import java.util.ArrayList;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.SparseArray;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
@@ -56,6 +61,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     private Cocos2dxRenderer mCocos2dxRenderer;
     private Cocos2dxEditText mCocos2dxEditText;
 
+    private ArrayList<String> mInputDevices;
+
     // ===========================================================
     // Constructors
     // ===========================================================
@@ -78,6 +85,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
         Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView = this;
         Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper = new Cocos2dxTextInputWraper(this);
+
+        mInputDevices = new ArrayList<String>();
 
         Cocos2dxGLSurfaceView.sHandler = new Handler() {
             @Override
@@ -312,7 +321,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                 this.queueEvent(new Runnable() {
                     @Override
                     public void run() {
-                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyDown(pKeyCode);
+                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyDown(getPersistentInputDeviceId(pKeyEvent.getDevice()), pKeyCode);
                     }
                 });
                 break;
@@ -344,7 +353,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
                 this.queueEvent(new Runnable() {
                     @Override
                     public void run() {
-                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyUp(pKeyCode);
+                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleKeyUp(getPersistentInputDeviceId(pKeyEvent.getDevice()), pKeyCode);
                     }
                 });
                 break;
@@ -416,5 +425,24 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         }
         sb.append("]");
         Log.d(Cocos2dxGLSurfaceView.TAG, sb.toString());
+    }
+
+    @SuppressLint("NewApi")
+    private int getPersistentInputDeviceId(InputDevice d) {
+        String idd = null;
+        
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN)
+            idd = d.getDescriptor();
+        else
+            idd = "dev_id_" + d.getId();
+        
+        int id = mInputDevices.indexOf(idd);
+        if (id < 0) {
+        	Log.e("INPUT", "registering new device " + idd);
+            mInputDevices.add(idd);
+            id = mInputDevices.size() - 1;
+        }
+        
+        return id;
     }
 }

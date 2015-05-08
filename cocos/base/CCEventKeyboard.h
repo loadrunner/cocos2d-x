@@ -227,11 +227,14 @@ public:
      * @param isPressed True if the key is pressed.
      * @js ctor
      */
-    EventKeyboard(KeyCode keyCode, bool isPressed);
+    EventKeyboard(KeyCode keyCode, bool isPressed, int deviceId = 0);
+    
+    inline int getDeviceId() const { return _deviceId; };
     
 private:
     KeyCode _keyCode;
     bool _isPressed;
+    int _deviceId;
     
     friend class EventListenerKeyboard;
 };
