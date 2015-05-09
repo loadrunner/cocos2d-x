@@ -61,7 +61,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     private Cocos2dxRenderer mCocos2dxRenderer;
     private Cocos2dxEditText mCocos2dxEditText;
 
-    private ArrayList<String> mInputDevices;
+    private static ArrayList<String> mInputDevices = new ArrayList<String>();
 
     // ===========================================================
     // Constructors
@@ -85,8 +85,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
         Cocos2dxGLSurfaceView.mCocos2dxGLSurfaceView = this;
         Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper = new Cocos2dxTextInputWraper(this);
-
-        mInputDevices = new ArrayList<String>();
 
         Cocos2dxGLSurfaceView.sHandler = new Handler() {
             @Override
