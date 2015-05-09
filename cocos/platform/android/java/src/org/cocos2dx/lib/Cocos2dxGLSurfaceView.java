@@ -450,7 +450,6 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         
         int id = mInputDevices.indexOf(idd);
         if (id < 0) {
-        	Log.e("INPUT", "registering new device " + idd);
             mInputDevices.add(idd);
             id = mInputDevices.size() - 1;
         }
