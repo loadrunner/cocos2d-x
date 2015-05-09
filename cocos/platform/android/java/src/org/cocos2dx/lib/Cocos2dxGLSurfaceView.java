@@ -441,6 +441,16 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     private int getPersistentInputDeviceId(InputDevice d) {
         String idd = null;
         
+        if ((d.getSources() & InputDevice.SOURCE_JOYSTICK) != InputDevice.SOURCE_JOYSTICK
+         && (d.getSources() & InputDevice.SOURCE_GAMEPAD) != InputDevice.SOURCE_GAMEPAD
+         && (d.getSources() & InputDevice.SOURCE_DPAD) != InputDevice.SOURCE_DPAD
+         && (d.getSources() & InputDevice.SOURCE_CLASS_JOYSTICK) != InputDevice.SOURCE_CLASS_JOYSTICK
+         && ((d.getSources() & InputDevice.SOURCE_KEYBOARD) != InputDevice.SOURCE_KEYBOARD
+          || d.getKeyboardType() != InputDevice.KEYBOARD_TYPE_ALPHABETIC)) {
+            return 0; // return 0 (first device) for input devices non relevant for gaming
+                      // maybe find a better way to deal with this
+        }
+        
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN)
             idd = d.getDescriptor();
         else
