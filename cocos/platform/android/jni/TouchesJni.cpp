@@ -83,10 +83,16 @@ extern "C" {
 #define KEYCODE_DPAD_LEFT 0x15
 #define KEYCODE_DPAD_RIGHT 0x16
 #define KEYCODE_ENTER 0x42
-#define KEYCODE_PLAY  0x7e
-#define KEYCODE_DPAD_CENTER  0x17
-#define KEYCODE_VOLUME_UP  0x18
-#define KEYCODE_VOLUME_DOWN  0x19
+#define KEYCODE_PLAY 0x7e
+#define KEYCODE_DPAD_CENTER 0x17
+#define KEYCODE_VOLUME_UP 0x18
+#define KEYCODE_VOLUME_DOWN 0x19
+#define KEYCODE_START 0x6c
+#define KEYCODE_SELECT 0x6d
+#define KEYCODE_L1 0x66
+#define KEYCODE_R1 0x67
+#define KEYCODE_L2 0x68
+#define KEYCODE_R2 0x69
     
     
     static std::unordered_map<int, cocos2d::EventKeyboard::KeyCode> g_keyCodeMap = {
@@ -101,6 +107,12 @@ extern "C" {
         { KEYCODE_DPAD_CENTER  , cocos2d::EventKeyboard::KeyCode::KEY_DPAD_CENTER},
         { KEYCODE_VOLUME_UP  , cocos2d::EventKeyboard::KeyCode::KEY_VOLUME_UP},
         { KEYCODE_VOLUME_DOWN  , cocos2d::EventKeyboard::KeyCode::KEY_VOLUME_DOWN},
+        { KEYCODE_START  , cocos2d::EventKeyboard::KeyCode::KEY_START},
+        { KEYCODE_SELECT  , cocos2d::EventKeyboard::KeyCode::KEY_SELECT},
+        { KEYCODE_L1  , cocos2d::EventKeyboard::KeyCode::KEY_L1},
+        { KEYCODE_R1  , cocos2d::EventKeyboard::KeyCode::KEY_R1},
+        { KEYCODE_L2  , cocos2d::EventKeyboard::KeyCode::KEY_L2},
+        { KEYCODE_R2  , cocos2d::EventKeyboard::KeyCode::KEY_R2},
         
     };
     

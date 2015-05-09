@@ -218,7 +218,13 @@ public:
         KEY_ENTER,
         KEY_PLAY,
         KEY_VOLUME_UP,
-        KEY_VOLUME_DOWN
+        KEY_VOLUME_DOWN,
+        KEY_START,
+        KEY_SELECT,
+        KEY_L1,
+        KEY_R1,
+        KEY_L2,
+        KEY_R2
     };
     
     /** Constructor.
