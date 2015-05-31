@@ -284,7 +284,8 @@ public:
     {
         return _tag.c_str();
     };
-
+    
+    inline bool isConnected() { return _connected; }
 };
 
 class SocketIOPacketV10x;
