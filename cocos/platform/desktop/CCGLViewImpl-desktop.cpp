@@ -186,7 +186,7 @@ static keyCodeItem g_keyCodeStructArray[] = {
 
     /* Function keys */
     { GLFW_KEY_ESCAPE          , EventKeyboard::KeyCode::KEY_ESCAPE        },
-    { GLFW_KEY_ENTER           , EventKeyboard::KeyCode::KEY_KP_ENTER      },
+    { GLFW_KEY_ENTER           , EventKeyboard::KeyCode::KEY_ENTER         },
     { GLFW_KEY_TAB             , EventKeyboard::KeyCode::KEY_TAB           },
     { GLFW_KEY_BACKSPACE       , EventKeyboard::KeyCode::KEY_BACKSPACE     },
     { GLFW_KEY_INSERT          , EventKeyboard::KeyCode::KEY_INSERT        },
