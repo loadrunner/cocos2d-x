@@ -209,6 +209,35 @@ void disableAccelerometerJni() {
     }
 }
 
+void enableGyroscopeJni() {
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "enableGyroscope", "()V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void disableGyroscopeJni() {
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "disableGyroscope", "()V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+bool hasGyroscopeJni() {
+    JniMethodInfo t;
+
+    bool ret = false;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "hasGyroscope", "()Z")) {
+        ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
+    return ret;
+}
+
 void setKeepScreenOnJni(bool value) {
     JniMethodInfo t;
     

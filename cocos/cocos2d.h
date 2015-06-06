@@ -72,6 +72,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerMouse.h"
 #include "base/CCEventMouse.h"
 #include "base/CCEventAcceleration.h"
+#include "base/CCEventListenerGyroscope.h"
 #include "base/CCEventListenerAcceleration.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerCustom.h"

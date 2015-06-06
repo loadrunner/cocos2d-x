@@ -22,6 +22,7 @@ set(COCOS_BASE_SRC
   base/CCDirector.cpp
   base/CCEvent.cpp
   base/CCEventAcceleration.cpp
+  base/CCEventGyroscope.cpp
   base/CCEventController.cpp
   base/CCEventCustom.cpp
   base/CCEventDispatcher.cpp
@@ -29,6 +30,7 @@ set(COCOS_BASE_SRC
   base/CCEventKeyboard.cpp
   base/CCEventListener.cpp
   base/CCEventListenerAcceleration.cpp
+  base/CCEventListenerGyroscope.cpp
   base/CCEventListenerController.cpp
   base/CCEventListenerCustom.cpp
   base/CCEventListenerFocus.cpp

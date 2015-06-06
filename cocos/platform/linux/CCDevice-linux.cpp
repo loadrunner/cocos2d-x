@@ -112,6 +112,16 @@ void Device::setAccelerometerInterval(float interval)
 
 }
 
+void Device::setGyroscopeEnabled(bool isEnabled)
+{
+
+}
+
+bool Device::hasGyroscope()
+{
+    return false;
+}
+
 class BitmapDC
 {
 public:
