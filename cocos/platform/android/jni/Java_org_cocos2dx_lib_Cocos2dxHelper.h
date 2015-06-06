@@ -39,6 +39,9 @@ extern std::string getFileDirectoryJNI();
 extern void enableAccelerometerJni();
 extern void disableAccelerometerJni();
 extern void setAccelerometerIntervalJni(float interval);
+extern void enableGyroscopeJni();
+extern void disableGyroscopeJni();
+extern bool hasGyroscopeJni();
 extern void setKeepScreenOnJni(bool value);
 extern bool openURLJNI(const char* url);
 // functions for UserDefault

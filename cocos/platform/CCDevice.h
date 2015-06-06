@@ -79,6 +79,16 @@ public:
     static void setAccelerometerInterval(float interval);
 
     /**
+     * To enable or disable gyroscope.
+     */
+    static void setGyroscopeEnabled(bool isEnabled);
+
+    /**
+     * Checks if the device has gyroscope
+     */
+    static bool hasGyroscope();
+
+    /**
      * Controls whether the screen should remain on.
      * 
      * @param keepScreenOn One flag indicating that the screen should remain on.

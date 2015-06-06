@@ -112,6 +112,7 @@ base/CCDataVisitor.cpp \
 base/CCDirector.cpp \
 base/CCEvent.cpp \
 base/CCEventAcceleration.cpp \
+base/CCEventGyroscope.cpp \
 base/CCEventCustom.cpp \
 base/CCEventDispatcher.cpp \
 base/CCEventFocus.cpp \
@@ -120,6 +121,7 @@ base/CCEventController.cpp \
 base/CCEventListener.cpp \
 base/CCEventListenerController.cpp \
 base/CCEventListenerAcceleration.cpp \
+base/CCEventListenerGyroscope.cpp \
 base/CCEventListenerCustom.cpp \
 base/CCEventListenerFocus.cpp \
 base/CCEventListenerKeyboard.cpp \

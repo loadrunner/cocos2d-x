@@ -60,7 +60,9 @@ public class Cocos2dxHelper {
     private static Cocos2dxSound sCocos2dSound;
     private static AssetManager sAssetManager;
     private static Cocos2dxAccelerometer sCocos2dxAccelerometer;
+    private static Cocos2dxGyroscope sCocos2dxGyroscope;
     private static boolean sAccelerometerEnabled;
+    private static boolean sGyroscopeEnabled;
     private static boolean sActivityVisible;
     private static String sPackageName;
     private static String sFileDirectory;
@@ -90,6 +92,7 @@ public class Cocos2dxHelper {
             Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
     
             Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(activity);
+            Cocos2dxHelper.sCocos2dxGyroscope = new Cocos2dxGyroscope(activity);
             Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
             Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(activity);
             Cocos2dxHelper.sAssetManager = activity.getAssets();
@@ -187,7 +190,21 @@ public class Cocos2dxHelper {
         Cocos2dxHelper.sAccelerometerEnabled = false;
         Cocos2dxHelper.sCocos2dxAccelerometer.disable();
     }
-    
+
+    public static void enableGyroscope() {
+        Cocos2dxHelper.sGyroscopeEnabled = true;
+        Cocos2dxHelper.sCocos2dxGyroscope.enable();
+    }
+
+    public static void disableGyroscope() {
+        Cocos2dxHelper.sGyroscopeEnabled = false;
+        Cocos2dxHelper.sCocos2dxGyroscope.disable();
+    }
+
+    public static boolean hasGyroscope() {
+        return Cocos2dxHelper.sCocos2dxGyroscope.hasSupport();
+    }
+
     public static void setKeepScreenOn(boolean value) {
         ((Cocos2dxActivity)sActivity).setKeepScreenOn(value);
     }
@@ -309,12 +326,18 @@ public class Cocos2dxHelper {
         if (Cocos2dxHelper.sAccelerometerEnabled) {
             Cocos2dxHelper.sCocos2dxAccelerometer.enable();
         }
+        if (Cocos2dxHelper.sGyroscopeEnabled) {
+            Cocos2dxHelper.sCocos2dxGyroscope.enable();
+        }
     }
 
     public static void onPause() {
         sActivityVisible = false;
         if (Cocos2dxHelper.sAccelerometerEnabled) {
             Cocos2dxHelper.sCocos2dxAccelerometer.disable();
+        }
+        if (Cocos2dxHelper.sGyroscopeEnabled) {
+            Cocos2dxHelper.sCocos2dxGyroscope.disable();
         }
     }
 
