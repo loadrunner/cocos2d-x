@@ -124,14 +124,14 @@ public:
      *
      * @param tag An interger number that identifies a shape object.
      */
-    inline void setTag(int tag) { _tag = tag; }
+    inline void setTag(long tag) { _tag = tag; }
     
     /**
      * Get this shape's tag.
      *
      * @return An interger number.
      */
-    inline int getTag() const { return _tag; }
+    inline long getTag() const { return _tag; }
     
     /**
      * Get the mass of this shape.
@@ -354,7 +354,7 @@ protected:
     float _newScaleX;
     float _newScaleY;
     PhysicsMaterial _material;
-    int _tag;
+    long _tag;
     int    _categoryBitmask;
     int    _collisionBitmask;
     int    _contactTestBitmask;
