@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chris Hannon http://www.channon.us
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -61,8 +61,18 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCMap.h"
-
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
+#include "WebSocket.h"
+#include "HttpClient.h"
+#include <algorithm>
+#include <sstream>
 #include <string>
+
+#include "json/rapidjson.h"
+#include "json/document.h"
+#include "json/stringbuffer.h"
+#include "json/writer.h"
 
 /**
  * @addtogroup core
@@ -103,22 +113,22 @@ public:
         /** Destructor of SIODelegate. */
         virtual ~SIODelegate() {}
         /**
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * This is kept for backwards compatibility, connect is now fired as a socket.io event "connect"
          * 
          * This function would be called when the related SIOClient object recevie messages that mean it have connected to endpoint sucessfully.
          *
          * @param client the connected SIOClient object.
          */
-        virtual void onConnect(SIOClient* client) = 0;
+        virtual void onConnect(SIOClient* client) { CCLOG("SIODelegate onConnect fired"); };
         /**
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * This is kept for backwards compatibility, message is now fired as a socket.io event "message"
          *
          * This function would be called wwhen the related SIOClient object recevie message or json message.
          *
          * @param client the connected SIOClient object.
          * @param data the message,it could be json message
          */
-        virtual void onMessage(SIOClient* client, const std::string& data) = 0;
+        virtual void onMessage(SIOClient* client, const std::string& data) { CCLOG("SIODelegate onMessage fired with data: %s", data.c_str()); };
         /**
          * Pure virtual callback function, this function should be overrided by the subclass.
          *
@@ -207,7 +217,7 @@ private:
 
     void onOpen();
     void onConnect();
-    void receivedDisconnect();
+	void socketClosed();
 
     friend class SIOClientImpl;
 
@@ -277,7 +287,112 @@ public:
 
 };
 
-}
+class SocketIOPacketV10x;
+
+class CC_DLL SocketIOPacket
+{
+public:
+	typedef enum
+	{
+		V09x,
+		V10x
+	}SocketIOVersion;
+	
+	SocketIOPacket();
+	virtual ~SocketIOPacket();
+	void initWithType(std::string packetType);
+	void initWithTypeIndex(int index);
+	
+	std::string toString();
+	virtual int typeAsNumber();
+	std::string typeForIndex(int index);
+	
+	void setEndpoint(std::string endpoint){ _endpoint = endpoint; };
+	std::string getEndpoint(){ return _endpoint; };
+	void setEvent(std::string event){ _name = event; };
+	std::string getEvent(){ return _name; };
+	
+	void addData(std::string data);
+	std::vector<std::string> getData(){ return _args; };
+	virtual std::string stringify();
+	
+	static SocketIOPacket * createPacketWithType(std::string type, SocketIOPacket::SocketIOVersion version);
+	static SocketIOPacket * createPacketWithTypeIndex(int type, SocketIOPacket::SocketIOVersion version);
+protected:
+	std::string _pId;//id message
+	std::string _ack;//
+	std::string _name;//event name
+	std::vector<std::string> _args;//we will be using a vector of strings to store multiple data
+	std::string _endpoint;//
+	std::string _endpointseperator;//socket.io 1.x requires a ',' between endpoint and payload
+	std::string _type;//message type
+	std::string _separator;//for stringify the object
+	std::vector<std::string> _types;//types of messages
+};
+
+class CC_DLL SocketIOPacketV10x : public SocketIOPacket
+{
+public:
+	SocketIOPacketV10x();
+	virtual ~SocketIOPacketV10x();
+	int typeAsNumber();
+	std::string stringify();
+private:
+	std::vector<std::string> _typesMessage;
+};
+
+
+/**
+ *  @brief The implementation of the socket.io connection
+ *		 Clients/endpoints may share the same impl to accomplish multiplexing on the same websocket
+ */
+class SIOClientImpl :
+	public cocos2d::Ref,
+	public WebSocket::Delegate
+{
+private:
+	int _port, _heartbeat, _timeout;
+	std::string _host, _sid, _uri;
+	bool _connected;
+	SocketIOPacket::SocketIOVersion _version;
+
+	WebSocket *_ws;
+
+	Map<std::string, SIOClient*> _clients;
+
+public:
+	SIOClientImpl(const std::string& host, int port);
+	virtual ~SIOClientImpl(void);
+
+	static SIOClientImpl* create(const std::string& host, int port);
+
+	virtual void onOpen(WebSocket* ws);
+	virtual void onMessage(WebSocket* ws, const WebSocket::Data& data);
+	virtual void onClose(WebSocket* ws);
+	virtual void onError(WebSocket* ws, const WebSocket::ErrorCode& error);
+
+	void connect();
+	void disconnect();
+	bool init();
+	void handshake();
+	void handshakeResponse(HttpClient *sender, HttpResponse *response);
+	void openSocket();
+	void heartbeat(float dt);
+
+	SIOClient* getClient(const std::string& endpoint);
+	void addClient(const std::string& endpoint, SIOClient* client);
+
+	void connectToEndpoint(const std::string& endpoint);
+	void disconnectFromEndpoint(const std::string& endpoint);
+
+	void send(std::string endpoint, std::string s);
+	void send(SocketIOPacket *packet);
+	void emit(std::string endpoint, std::string eventname, std::string args);
+
+
+};
+
+} // namespace network
 
 NS_CC_END
 
