@@ -75,7 +75,7 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 #include "json/writer.h"
 
 /**
- * @addtogroup core
+ * @addtogroup network
  * @{
  */
 

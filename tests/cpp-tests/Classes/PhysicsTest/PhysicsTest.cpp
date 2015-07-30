@@ -54,9 +54,9 @@ void PhysicsDemoDisabled::onEnter()
 #else
 
 PhysicsDemo::PhysicsDemo()
-: _debugDraw(false)
-, _spriteTexture(nullptr)
+: _spriteTexture(nullptr)
 , _ball(nullptr)
+, _debugDraw(false)
 {
 }
 
@@ -962,7 +962,7 @@ void PhysicsDemoPump::onEnter()
     bgearB->setCategoryBitmask(0x04);
 
     _world->addJoint(PhysicsJointPin::construct(bgearB, body, bgear->getPosition()));
-    _world->addJoint(PhysicsJointGear::construct(sgearB, bgearB, -M_PI_2, -2.0f));
+    _world->addJoint(PhysicsJointGear::construct(sgearB, bgearB, (float)-M_PI_2, -2.0f));
 
     // plugger
     Vec2 seg[] = {VisibleRect::leftTop() + Vec2(75, -120), VisibleRect::leftBottom() + Vec2(75, -100)};

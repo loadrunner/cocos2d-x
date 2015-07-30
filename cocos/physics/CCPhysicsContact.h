@@ -55,7 +55,9 @@ typedef struct CC_DLL PhysicsContactData
 }PhysicsContactData;
 
 /**
- * @addtogroup core
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_2d
  * @{
  */
 
@@ -99,6 +101,8 @@ public:
      * @brief Set data to contact. 
      
      * You must manage the memory yourself, Generally you can set data at contact begin, and distory it at contact separate.
+     *
+     * @lua NA
      */
     inline void setData(void* data) { _data = data; }
 
@@ -305,6 +309,7 @@ protected:
     virtual ~EventListenerPhysicsContactWithGroup();
 };
 
+/** @} */
 /** @} */
 
 NS_CC_END

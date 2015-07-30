@@ -1,6 +1,6 @@
 #ifndef _SHADER_TEST2_H_
 #define _SHADER_TEST2_H_
-#include "../testBasic.h"
+
 #include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
 
@@ -29,7 +29,7 @@ protected:
     Effect();
     virtual ~Effect();
     cocos2d::GLProgramState* _glprogramstate;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     std::string _fragSource;
     cocos2d::EventListenerCustom* _backgroundListener;
 #endif
