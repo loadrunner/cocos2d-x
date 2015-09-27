@@ -123,7 +123,7 @@ public class Cocos2dxWebViewHelper {
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
-                	webView.loadDataWithBaseURL(baseURL, data, mimeType, encoding, null);
+                    webView.loadDataWithBaseURL(baseURL, data, mimeType, encoding, null);
                 }
             }
         });
@@ -135,7 +135,7 @@ public class Cocos2dxWebViewHelper {
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
-                	webView.loadDataWithBaseURL(baseUrl, data, null, null, null);
+                    webView.loadDataWithBaseURL(baseUrl, data, null, null, null);
                 }
             }
         });

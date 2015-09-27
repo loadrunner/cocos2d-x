@@ -75,7 +75,7 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 
 void Device::setAccelerometerInterval(float interval)
 {
-	setAccelerometerIntervalJni(interval);
+    setAccelerometerIntervalJni(interval);
 }
 
 void Device::setGyroscopeEnabled(bool isEnabled)
@@ -110,10 +110,10 @@ public:
     {
     }
 
-    bool getBitmapFromJavaShadowStroke(	const char *text,
-    									int nWidth,
-    									int nHeight,
-    									Device::TextAlign eAlignMask,
+    bool getBitmapFromJavaShadowStroke( const char *text,
+                                        int nWidth,
+                                        int nHeight,
+                                        Device::TextAlign eAlignMask,
                       const FontDefinition& textDefinition )
     {
            JniMethodInfo methodInfo;
@@ -132,7 +132,7 @@ public:
            // requires this portion of the path to be omitted for assets inside the app package.
            if (fullPathOrFontName.find("assets/") == 0)
            {
-               fullPathOrFontName = fullPathOrFontName.substr(strlen("assets/"));	// Chop out the 'assets/' portion of the path.
+               fullPathOrFontName = fullPathOrFontName.substr(strlen("assets/"));   // Chop out the 'assets/' portion of the path.
            }
 
            /**create bitmap
@@ -198,10 +198,14 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
     return ret;
 }
 
-
 void Device::setKeepScreenOn(bool value)
 {
     setKeepScreenOnJni(value);
+}
+
+void Device::vibrate(float duration)
+{
+    vibrateJni(duration);
 }
 
 NS_CC_END

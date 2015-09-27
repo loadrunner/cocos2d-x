@@ -28,7 +28,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView;
 
-import org.cocos2dx.lib.Cocos2dxHelper;
 public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     // ===========================================================
     // Constants
@@ -56,7 +55,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     // Getter & Setter
     // ===========================================================
 
-    public static void setAnimationInterval(final double animationInterval) {
+    public static void setAnimationInterval(final float animationInterval) {
         Cocos2dxRenderer.sAnimationInterval = (long) (animationInterval * Cocos2dxRenderer.NANOSECONDSPERSECOND);
     }
 
@@ -148,12 +147,12 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     }
 
     public void handleOnPause() {
-    	/**
-    	 * onPause may be invoked before onSurfaceCreated, 
-    	 * and engine will be initialized correctly after
-    	 * onSurfaceCreated is invoked. Can not invoke any
-    	 * native method before onSurfaceCreated is invoked
-    	 */
+        /**
+         * onPause may be invoked before onSurfaceCreated, 
+         * and engine will be initialized correctly after
+         * onSurfaceCreated is invoked. Can not invoke any
+         * native method before onSurfaceCreated is invoked
+         */
         if (! mNativeInitCompleted)
             return;
 

@@ -35,6 +35,7 @@ cocos2d.cpp \
 2d/CCAnimationCache.cpp \
 2d/CCAtlasNode.cpp \
 2d/CCCamera.cpp \
+2d/CCCameraBackgroundBrush.cpp \
 2d/CCClippingNode.cpp \
 2d/CCClippingRectangleNode.cpp \
 2d/CCComponent.cpp \
@@ -182,6 +183,7 @@ renderer/CCTechnique.cpp \
 renderer/CCTexture2D.cpp \
 renderer/CCTextureAtlas.cpp \
 renderer/CCTextureCache.cpp \
+renderer/CCTextureCube.cpp \
 renderer/CCTrianglesCommand.cpp \
 renderer/CCVertexAttribBinding.cpp \
 renderer/CCVertexIndexBuffer.cpp \
@@ -271,13 +273,14 @@ LOCAL_STATIC_LIBRARIES += cocos_tiff_static
 LOCAL_STATIC_LIBRARIES += cocos_webp_static
 LOCAL_STATIC_LIBRARIES += cocos_chipmunk_static
 LOCAL_STATIC_LIBRARIES += cocos_zlib_static
-#LOCAL_STATIC_LIBRARIES += recast_static
+LOCAL_STATIC_LIBRARIES += recast_static
+LOCAL_STATIC_LIBRARIES += bullet_static
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
-LOCAL_CFLAGS   +=  -DCC_USE_NAVMESH=0
+LOCAL_CFLAGS   +=  -DCC_USE_NAVMESH=0 -DCC_USE_3D_PHYSICS=0
 LOCAL_CFLAGS   +=  -fexceptions
 LOCAL_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
 LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
@@ -299,7 +302,6 @@ LOCAL_STATIC_LIBRARIES += cocos3d_static
 LOCAL_STATIC_LIBRARIES += cocos_network_static
 LOCAL_STATIC_LIBRARIES += audioengine_static
 LOCAL_STATIC_LIBRARIES += cocosdenshion_static
-#LOCAL_STATIC_LIBRARIES += bullet_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================

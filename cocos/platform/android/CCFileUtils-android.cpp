@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
 #include <stdlib.h>
+#include <sys/stat.h>
 
 #define  LOG_TAG    "CCFileUtils-android.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -121,7 +122,7 @@ std::string FileUtilsAndroid::getNewFilename(const std::string &filename) const
         }
         idx = pos + 1;
     }
-    
+
     if (change)
     {
         newFileName.clear();
@@ -141,7 +142,7 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
     }
 
     bool bFound = false;
-    
+
     // Check whether file exists in apk.
     if (strFilePath[0] != '/')
     {
@@ -173,6 +174,47 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
     return bFound;
 }
 
+bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    if (dirPath.empty())
+    {
+        return false;
+    }
+
+    const char* s = dirPath.c_str();
+    bool startWithAssets = (dirPath.find("assets/") == 0);
+    int lenOfAssets = 7;
+
+    // find absolute path in flash memory
+    if (s[0] == '/')
+    {
+        CCLOG("find in flash memory dirPath(%s)", s);
+        struct stat st;
+        if (stat(s, &st) == 0)
+        {
+            return S_ISDIR(st.st_mode);
+        }
+    }
+
+    // find it in apk's assets dir
+    // Found "assets/" at the beginning of the path and we don't want it
+    CCLOG("find in apk dirPath(%s)", s);
+    if (startWithAssets)
+    {
+        s += lenOfAssets;
+    }
+    if (FileUtilsAndroid::assetmanager)
+    {
+        AAssetDir* aa = AAssetManager_openDir(FileUtilsAndroid::assetmanager, s);
+        if (aa && AAssetDir_getNextFileName(aa))
+        {
+            AAssetDir_close(aa);
+            return true;
+        }
+    }
+    return false;
+}
+
 bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
 {
     // On Android, there are two situations for full path.
@@ -192,7 +234,7 @@ Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
     {
         return Data::Null;
     }
-    
+
     unsigned char* data = nullptr;
     ssize_t size = 0;
     string fullPath = fullPathForFilename(filename);
@@ -256,7 +298,7 @@ Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
 
             FILE *fp = fopen(fullPath.c_str(), mode);
             CC_BREAK_IF(!fp);
-            
+
             long fileSize;
             fseek(fp,0,SEEK_END);
             fileSize = ftell(fp);
@@ -272,11 +314,11 @@ Data FileUtilsAndroid::getData(const std::string& filename, bool forString)
             }
             fileSize = fread(data,sizeof(unsigned char), fileSize,fp);
             fclose(fp);
-            
+
             size = fileSize;
         } while (0);
     }
-    
+
     Data ret;
     if (data == nullptr || size == 0)
     {
@@ -301,21 +343,21 @@ std::string FileUtilsAndroid::getStringFromFile(const std::string& filename)
     std::string ret((const char*)data.getBytes());
     return ret;
 }
-    
+
 Data FileUtilsAndroid::getDataFromFile(const std::string& filename)
 {
     return getData(filename, false);
 }
 
 unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const char* mode, ssize_t * size)
-{    
+{
     unsigned char * data = 0;
-    
+
     if ( filename.empty() || (! mode) )
     {
         return 0;
     }
-    
+
     string fullPath = fullPathForFilename(filename);
 
     if (fullPath[0] != '/')
@@ -366,7 +408,7 @@ unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const 
             //CCLOG("GETTING FILE ABSOLUTE DATA: %s", filename);
             FILE *fp = fopen(fullPath.c_str(), mode);
             CC_BREAK_IF(!fp);
-            
+
             long fileSize;
             fseek(fp,0,SEEK_END);
             fileSize = ftell(fp);
@@ -374,14 +416,14 @@ unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const 
             data = (unsigned char*) malloc(fileSize);
             fileSize = fread(data,sizeof(unsigned char), fileSize,fp);
             fclose(fp);
-            
+
             if (size)
             {
                 *size = fileSize;
             }
         } while (0);
     }
-    
+
     if (! data)
     {
         std::string msg = "Get data from file(";
