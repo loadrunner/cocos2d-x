@@ -322,6 +322,8 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
             tempDef.height = tempRect.size.height + _letterPadding + _letterEdgeExtend;
             tempDef.offsetX = tempRect.origin.x + adjustForDistanceMap + adjustForExtend;
             tempDef.offsetY = _fontAscender + tempRect.origin.y - adjustForDistanceMap - adjustForExtend;
+            // fixes width by including right offset
+            tempDef.width = tempDef.xAdvance - tempDef.offsetX + _letterPadding + _letterEdgeExtend;
 
             if (bitmapHeight > _currLineHeight)
             {

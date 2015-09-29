@@ -80,7 +80,7 @@ public:
 
     inline const std::unordered_map<ssize_t, Texture2D*>& getTextures() const{ return _atlasTextures;}
     void  addTexture(Texture2D *texture, int slot);
-    float getLineHeight() const { return _lineHeight; }
+    float getLineHeight() const { return _lineHeight + _letterPadding + _letterEdgeExtend; }
     void  setLineHeight(float newHeight);
     
     Texture2D* getTexture(int slot);
