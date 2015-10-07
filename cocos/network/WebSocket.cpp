@@ -297,7 +297,6 @@ bool WebSocket::init(const Delegate& delegate,
     _path = path;
     _SSLConnection = useSSL ? 1 : 0;
     
-    CCLOG("[WebSocket::init] _host: %s, _port: %d, _path: %s", _host.c_str(), _port, _path.c_str());
 
     size_t protocolCount = 0;
     if (protocols && protocols->size() > 0)
@@ -381,7 +380,6 @@ void WebSocket::close()
         return;
     }
     
-    CCLOG("websocket (%p) connection closed by client", this);
     _readyState = State::CLOSED;
 
     _wsHelper->joinSubThread();
